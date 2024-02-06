@@ -21,6 +21,7 @@ jobs:
       - name: Clone app code
         uses: docker://alpine/git:latest
         run: |
+          export GITHUB_TOKEN=${{ cloudbees.scm.token }}
           git clone https://github.com/cb-demos/VacationRentals.git
       - name: Render release pipeline
         uses: docker://groovy
