@@ -27,6 +27,7 @@ jobs:
         uses: docker://groovy
         run: |
           groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml
+          cat release.yaml
       - name: Push release workflow to application repository
         uses: docker://alpine/git:latest
         shell: sh
