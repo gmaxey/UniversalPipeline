@@ -11,16 +11,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: cloudbees-io/checkout@v1
+      - name: Git global credentials
+        uses: cloudbees-io/configure-git-global-credentials@v1
+        with:
+          token: ${{ github.api.token }}
       - name: Clone app code
         uses: docker://alpine/git:latest
         run: |
-          export GITHUB_TOKEN=${{ cloudbees.api.token }}
           git clone https://github.com/cb-demos/VacationRentals.git
       - name: Generate release
         uses: docker://alpine/git:latest
         shell: sh
         run: |
-          export GITHUB_TOKEN=${{ cloudbees.api.token }}
           cd VacationRentals
           mkdir -p .cloudbees/workflows
           cp ../template.yaml .cloudbees/workflows/ReleaseV1.yaml
