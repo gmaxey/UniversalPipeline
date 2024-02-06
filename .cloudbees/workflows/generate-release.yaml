@@ -14,11 +14,13 @@ jobs:
       - name: Clone app code
         uses: docker://alpine/git:latest
         run: |
+          export GITHUB_TOKEN=${{ cloudbees.api.token }}
           git clone https://github.com/cb-demos/VacationRentals.git
       - name: Generate release
-        uses: docker://golang:1.20.3-alpine3.17
+        uses: docker://alpine/git:latest
         shell: sh
         run: |
+          export GITHUB_TOKEN=${{ cloudbees.api.token }}
           cd VacationRentals
           mkdir -p .cloudbees/workflows
           cp ../template.yaml .cloudbees/workflows/ReleaseV1.yaml
