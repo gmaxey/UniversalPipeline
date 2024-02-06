@@ -16,12 +16,9 @@ jobs:
         uses: cloudbees-io/checkout@v1
       - name: Git global credentials
         uses: cloudbees-io/configure-git-global-credentials@v1
-        with:
-          token: ${{ cloudbees.scm.token }}
       - name: Clone app code
         uses: docker://alpine/git:latest
         run: |
-          export GITHUB_TOKEN=${{ cloudbees.scm.token }}
           git clone https://github.com/cb-demos/VacationRentals.git
       - name: Render release pipeline
         uses: docker://groovy
@@ -35,6 +32,5 @@ jobs:
           cd VacationRentals
           mkdir -p .cloudbees/workflows
           cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
-          export GITHUB_TOKEN=${{ cloudbees.scm.token }}
           git commit . -m "Rendered ReleaseV1"
           git push
