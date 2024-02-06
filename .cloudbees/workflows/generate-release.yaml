@@ -1,0 +1,26 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: Generate application release from template
+
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  build:
+    steps:
+      - name: Checkout code
+        uses: cloudbees-io/checkout@v1
+      - name: Clone app code
+        uses: docker://alpine/git:latest
+        run: |
+          git clone https://github.com/cb-demos/VacationRentals.git
+      - name: Generate release
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          cd VacationRentals
+          mkdir -p .cloudbees/workflows
+          cp ../template.yaml .cloudbees/workflows/ReleaseV1.yaml
+          git commit . -m "Rendered ReleaseV1"
+          git push
