@@ -1,0 +1,33 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: TBD
+
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  build:
+    steps:
+      - name: compile
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "hello world"
+  analyze:
+    steps:
+      - name: scan
+  deploy-qa:
+    needs: build
+    environment: qa
+    steps:
+      - name: deploy
+        uses: docker://golang:1.20.3-alpine3.17
+        shell: sh
+        run: |
+          echo "hello world"
+  deploy-production:
+    needs: deploy-qa
+    environment: production
+    steps:
+      - name: deploy
