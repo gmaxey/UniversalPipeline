@@ -35,5 +35,6 @@ jobs:
           cd VacationRentals
           mkdir -p .cloudbees/workflows
           cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
+          git config --global user.email "gmaxey@cloudbees.com"
           git commit . -m "Rendered ReleaseV1"
           git push
