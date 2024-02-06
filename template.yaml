@@ -13,7 +13,7 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
         run: |
-          echo "Compiling"
+          echo "Building ${appname} with ${build.type} ${build.args}"
   analyze:
     steps:
       - name: scan
@@ -29,7 +29,7 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
         run: |
-          echo "Deploying to qa"
+          echo "Deploying ${appname} with ${deploy.target} ${deploy.args} to qa"
   deploy-production:
     needs: deploy-qa
     environment: ihg-production
@@ -38,4 +38,4 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
         run: |
-          echo "Deploying to production"
+          echo "Deploying ${appname} ${deploy.target} ${deploy.args} to production"
