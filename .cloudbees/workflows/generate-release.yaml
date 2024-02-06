@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - '**'
+permissions:
+  scm-token-own: read
+  scm-token-org: read
 jobs:
   build:
     steps:
@@ -14,17 +17,21 @@ jobs:
       - name: Git global credentials
         uses: cloudbees-io/configure-git-global-credentials@v1
         with:
-          token: ${{ github.api.token }}
+          token: ${{ cloudbees.scm.token }}
       - name: Clone app code
         uses: docker://alpine/git:latest
         run: |
           git clone https://github.com/cb-demos/VacationRentals.git
-      - name: Generate release
+      - name: Render release pipeline
+        uses: docker://groovy
+        run: |
+          groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml
+      - name: Push release workflow to application repository
         uses: docker://alpine/git:latest
         shell: sh
         run: |
           cd VacationRentals
           mkdir -p .cloudbees/workflows
-          cp ../template.yaml .cloudbees/workflows/ReleaseV1.yaml
+          cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
           git commit . -m "Rendered ReleaseV1"
           git push
