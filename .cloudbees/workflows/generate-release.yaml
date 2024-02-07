@@ -26,12 +26,20 @@ jobs:
           groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml
           cat release.yaml
       - name: Push release workflow to application repository
+        if: false
         uses: docker://alpine/git:latest
         shell: sh
         run: |
           cd VacationRentals
           mkdir -p .cloudbees/workflows
-          # cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
-          cp ../release.yaml ../.cloudbees/workflows/ReleaseV1.yaml
-          #git commit . -m "Rendered ReleaseV1"
-          #git push
+          cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
+          git commit . -m "Rendered ReleaseV1"
+          git push
+      - name: Push release workflow to workflow repository
+        uses: docker://alpine/git:latest
+        shell: sh
+        run: |
+          cd VacationRentals
+          cp release.yaml .cloudbees/workflows/ReleaseV1.yaml
+          git commit . -m "Rendered ReleaseV1"
+          git push
