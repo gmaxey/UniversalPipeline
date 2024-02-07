@@ -33,5 +33,5 @@ jobs:
           mkdir -p .cloudbees/workflows
           # cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
           cp ../release.yaml ../.cloudbees/workflows/ReleaseV1.yaml
-          git commit . -m "Rendered ReleaseV1"
-          git push
+          #git commit . -m "Rendered ReleaseV1"
+          #git push
