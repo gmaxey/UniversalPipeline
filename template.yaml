@@ -13,7 +13,8 @@ jobs:
         uses: docker://golang:1.20.3-alpine3.17
         shell: sh
         run: |
-          echo "Building ${appname} with ${build.type} ${build.args}"
+          echo "Building ${appname}"
+          echo <% if build.type==maven ? mvn : build.type %>
   analyze:
     steps:
       - name: scan
@@ -30,6 +31,7 @@ jobs:
         shell: sh
         run: |
           echo "Deploying ${appname} with ${deploy.target} ${deploy.args} to qa"
+          echo Connect to app at https://${baseUrl}.qa:${{ var.PORTNUMBER }}
   deploy-production:
     needs: deploy-qa
     environment: production
