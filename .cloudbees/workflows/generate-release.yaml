@@ -23,7 +23,7 @@ jobs:
       - name: Render release pipeline
         uses: docker://groovy
         run: |
-          groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml
+          groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml 2> /dev/null
           cat release.yaml
       - name: Push release workflow to application repository
         if: "false"
