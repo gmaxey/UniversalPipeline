@@ -26,7 +26,7 @@ jobs:
           groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml
           cat release.yaml
       - name: Push release workflow to application repository
-        if: false
+        if: "false"
         uses: docker://alpine/git:latest
         shell: sh
         run: |
@@ -36,7 +36,7 @@ jobs:
           git commit . -m "Rendered ReleaseV1"
           git push
       - name: Push release workflow to workflow repository
-        if: false
+        if: "false"
         uses: docker://alpine/git:latest
         shell: sh
         run: |
