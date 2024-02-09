@@ -31,7 +31,7 @@ jobs:
         shell: sh
         run: |
           echo "Deploying ${appname} with ${deploy.target} ${deploy.args} to qa"
-          echo Connect to app at https://${deploy.baseUrl}.qa:\${{ var.PORTNUMBER }}
+          echo Connect to app at https://${deploy.baseUrl}.qa:\${{ vars.PORTNUMBER }}
   deploy-production:
     needs: deploy-qa
     environment: production
