@@ -36,10 +36,10 @@ jobs:
         run: |
           cd vacationRentalRuntime
           mkdir -p .cloudbees/workflows && cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
-          git config user.email "gmaxey@cloudbees.com"
-          git config user.name "Greg Maxey"
           git add .cloudbees/workflows/ReleaseV1.yaml
+          git config --global user.email "gregorymaxey@yahoo.com"
+          git config --global user.name "Greg Maxey"
           git commit . -m "Rendered ReleaseV1"
           git remote remove origin
           git remote add origin https://${{ secrets.VACATION_RUNTIME}}@github.com/gmaxey/vacationRentalRuntime
-          git push
+          git push --set-upstream origin main
