@@ -34,9 +34,10 @@ jobs:
         uses: docker://alpine/git:latest
         shell: sh
         run: |
-          GITHUB_TOKEN=${{ secrets.VACATION_RUNTIME}}
           cd vacationRentalRuntime
           mkdir -p .cloudbees/workflows && cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
           git add .cloudbees/workflows/ReleaseV1.yaml
           git commit . -m "Rendered ReleaseV1"
+          git remote remove origin
+          git remote add origin https://${{ secrets.VACATION_RUNTIME}}@github.com/gmaxey/vacationRentalRuntime
           git push
