@@ -31,10 +31,10 @@ jobs:
         shell: sh
         run: |
           echo "Deploying ${appname} with ${deploy.target} ${deploy.args} to qa"
-          echo Connect to app at https://${deploy.baseUrl}.qa:\${{ vars.PORTNUMBER }}
+          echo Connect to app at https://${deploy.baseUrl}.qa:\${{ vars.CONNECTION_PORT }}
   deploy-production:
     needs: deploy-qa
-    environment: production
+    environment: Production
     steps:
       - name: deploy
         uses: docker://golang:1.20.3-alpine3.17
