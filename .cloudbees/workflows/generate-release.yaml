@@ -25,22 +25,18 @@ jobs:
         run: |
           groovy render.groovy template.yaml VacationRentals/values.yaml >> release.yaml 2> /dev/null
           cat release.yaml
-      - name: Push release workflow to application repository
-        if: "false"
+      - name: Clone runtime repo
+        uses: docker://alpine/git:latest
+        run: |
+          git clone https://github.com/gmaxey/vacationRentalRuntime.git
+      - name: Push release workflow to runtime repository
+        if: "true"
         uses: docker://alpine/git:latest
         shell: sh
         run: |
-          cd VacationRentals
-          mkdir -p .cloudbees/workflows
-          cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
-          git commit . -m "Rendered ReleaseV1"
-          git push
-      - name: Push release workflow to workflow repository
-        if: "false"
-        uses: docker://alpine/git:latest
-        shell: sh
-        run: |
-          cd VacationRentals
-          cp release.yaml .cloudbees/workflows/ReleaseV1.yaml
+          GITHUB_TOKEN=${{ secrets.VACATION_RUNTIME}}
+          cd vacationRentalRuntime
+          mkdir -p .cloudbees/workflows && cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
+          git add .cloudbees/workflows/ReleaseV1.yaml
           git commit . -m "Rendered ReleaseV1"
           git push
