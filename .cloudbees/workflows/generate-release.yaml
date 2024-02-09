@@ -30,7 +30,6 @@ jobs:
         run: |
           git clone https://github.com/gmaxey/vacationRentalRuntime.git
       - name: Push release workflow to runtime repository
-        if: "true"
         uses: docker://alpine/git:latest
         shell: sh
         run: |
