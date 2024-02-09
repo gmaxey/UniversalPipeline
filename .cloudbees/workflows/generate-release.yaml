@@ -36,6 +36,8 @@ jobs:
         run: |
           cd vacationRentalRuntime
           mkdir -p .cloudbees/workflows && cp ../release.yaml .cloudbees/workflows/ReleaseV1.yaml
+          git config --global user.email "gmaxey@cloudbees.com"
+          git config --global user.name "Greg Maxey"
           git add .cloudbees/workflows/ReleaseV1.yaml
           git commit . -m "Rendered ReleaseV1"
           git remote remove origin
