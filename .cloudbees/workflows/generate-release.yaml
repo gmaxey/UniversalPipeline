@@ -3,9 +3,7 @@ kind: workflow
 name: Generate application release from template
 
 on:
-  push:
-    branches:
-      - '**'
+  workflow_dispatch:
 permissions:
   scm-token-own: read
   scm-token-org: read
@@ -19,7 +17,7 @@ jobs:
       - name: Clone app code
         uses: docker://alpine/git:latest
         run: |
-          git clone https://github.com/cb-demos/VacationRentals.git
+          git clone https://github.com/gmaxey/VacationRentals.git
       - name: Render release pipeline
         uses: docker://groovy
         run: |
@@ -40,5 +38,5 @@ jobs:
           git config --global user.name "Greg Maxey"
           git commit . -m "Rendered ReleaseV1"
           git remote remove origin
-          git remote add origin https://${{ secrets.VACATION_RUNTIME}}@github.com/gmaxey/vacationRentalRuntime
+          git remote add origin https://${{ secrets.VACATIONS_RUNTIME}}@github.com/gmaxey/vacationRentalRuntime
           git push --set-upstream origin main
